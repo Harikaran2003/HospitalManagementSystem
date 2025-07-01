@@ -3,6 +3,8 @@ package Mainclass;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.customexception.NameException;
+
 import models.Appointment;
 import models.Doctor;
 import models.Patient;
@@ -78,11 +80,24 @@ Main m=new Main();
         }
         public  String addpatient()
         {
-        	Patient p=new Patient(patId++,"hari","aids","01-03-2025","02-05-2025","hari",22,"male","937304294");
+        	NameException n=new NameException(null);
+        	Scanner sc=new Scanner(System.in);
+        	String name=sc.next();
+        	try {
+        	if(n.checkname(name)) {
+        	Patient p=new Patient(patId++,name,"aids","01-03-2025","02-05-2025","hari",22,"male","937304294");
         	patients.add(p);
         	return "Successfully added";
-
+        	}
+        	}
+        	catch(NameException e)
+        	{
+        		e.printStackTrace();
+        	}
+        	return null;
         }
+        
+        
         public  void viewdoctors()
         {
         	
