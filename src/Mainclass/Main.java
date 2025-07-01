@@ -1,15 +1,19 @@
 package Mainclass;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
+import models.Appointment;
 import models.Doctor;
 import models.Patient;
 public class Main{
-	  public List<Doctor> doctors=new ArrayList<Doctor>();
+	 static public List<Doctor> doctors=new ArrayList<Doctor>();
 	  
-	  public List<Patient>patients=new ArrayList<Patient>();
+	  static public List<Patient>patients=new ArrayList<Patient>();
+	  static public List<Appointment>appointment=new ArrayList<Appointment>();
 	  static int docid=101;
 	  static int patId=1;
+	  static int appId=1001;
 	  
     public static void main(String... args)
     {
@@ -38,7 +42,7 @@ Main m=new Main();
             case 3 -> m.viewdoctors();
             case 4 -> m.viewpatients();
             case 5 -> System.out.println(m.assignDoctortoPatient());
-            case 6 -> m.createappointment();
+            case 6 ->System.out.println( m.createappointment());
             case 7 -> m.viewappointments();
             case 8 -> System.out.println("Exiting system. Goodbye!");
             default -> System.out.println("Please choose correct option.");
@@ -142,13 +146,67 @@ Main m=new Main();
 			return null;
 		}
 
-		public void createappointment()
+		public String createappointment()
         {
+			int patid=1;
+			int docId=101;
+			String date="2025-07-01 12:30";
+			try {
+				
+				LocalDateTime ldt= LocalDateTime.parse(date.replace(" ", "T"));
+				String odate=ldt.toString();
+				
+				if(isFree(odate))
+				{
+				Appointment a=new Appointment(appId,patid,docId,ldt.toString());
+				
+			Patient pname=getPatientById(patid);
+			Doctor dname=getDoctorById(docId);
+			appointment.add(a);
+			return "Successfully created appointment for "+pname.getPatientName()+" at "+ldt.toString()+" with "+dname.getName();
+				}
+				else
+					{
+					return "for this time the appointment was already booked";
+					}
+				}
+			catch(Exception e)
+			{
+				 e.printStackTrace();
+			}
+			return null;
 
         }
+		boolean isFree(String odate)
+		{
+			for(Appointment i:appointment)
+			{
+				String date=i.getTime();
+				if(date.equals(odate))
+				{
+					return false;
+					
+				}
+			}
+			return true;
+		}
         public void viewappointments()
         {
+        	var f=true;
+        	int paid=1;
+        	for(Appointment a:appointment)
+        	{
+        		if(a.getPatientName()==paid)
+        		{
+        			System.out.println("Name ="+a.getPatientName()+"\n Doctor Name="+a.getDoctorName()+"\n Time"+a.getTime());
+        			f=false;
+        		}
+        	}
+        	if(f)
+        		System.out.println("Invalid patientId");
+        	
 
         }
+        
 
 }
