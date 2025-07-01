@@ -3,11 +3,13 @@ package Mainclass;
 import java.util.*;
 
 import models.Doctor;
+import models.Patient;
 public class Main{
 	  public List<Doctor> doctors=new ArrayList<Doctor>();
 	  
-	  
+	  public List<Patient>patients=new ArrayList<Patient>();
 	  static int docid=101;
+	  static int patId=1;
 	  
     public static void main(String... args)
     {
@@ -15,6 +17,7 @@ public class Main{
     int choice;
    // List<Doctor> doctores=new ArrayList<Doctor>();
 Main m=new Main();
+
         do{
 
         System.out.println("\n===== Hospital Management Menu =====");
@@ -30,11 +33,11 @@ Main m=new Main();
             choice = sc.nextInt();
             
             switch(choice){
-            case 1 -> m.adddoctor();
-            case 2 -> addpatient();
+            case 1 -> System.out.println(m.adddoctor());
+            case 2 -> System.out.println(m.addpatient());
             case 3 -> m.viewdoctors();
             case 4 -> m.viewpatients();
-            case 5 -> m.assignDoctortoPatient();
+            case 5 -> System.out.println(m.assignDoctortoPatient());
             case 6 -> m.createappointment();
             case 7 -> m.viewappointments();
             case 8 -> System.out.println("Exiting system. Goodbye!");
@@ -44,9 +47,9 @@ Main m=new Main();
             }while(choice!=8);
     }
 
-       public void adddoctor()
+       public String adddoctor()
         {
-    	   Scanner sc=new Scanner(System.in);
+    	  // Scanner sc=new Scanner(System.in);
     	   
 //    	   
 //    	   System.out.println("Enter the Name");
@@ -66,10 +69,14 @@ Main m=new Main();
 //    	   
     	   Doctor d=new Doctor(docid++,"jebakumar",52,"male","41541","pysoco","Cse",true);
     	   doctors.add(d);
+    	   return "Successfully doctor added";
 
         }
-        public static void addpatient()
+        public  String addpatient()
         {
+        	Patient p=new Patient(patId++,"hari","aids","01-03-2025","02-05-2025","hari",22,"male","937304294");
+        	patients.add(p);
+        	return "Successfully added";
 
         }
         public  void viewdoctors()
@@ -86,13 +93,56 @@ Main m=new Main();
         }
         public void viewpatients()
         {
+        	if(!patients.isEmpty())
+        	{
+        		for(Patient p:patients)
+        		{
+        			System.out.println(p);
+        		}
+        	}
 
         }
-        public void assignDoctortoPatient()
+        public Doctor assignDoctortoPatient()
         {
-
+        	Scanner sc=new Scanner(System.in);
+        	System.out.println("Enter patientId:");
+        	int patientId=sc.nextInt();
+        	System.out.println("Enter doctorId:");
+        	int doctorId=sc.nextInt();
+        	Patient p1=getPatientById(patientId);
+        	Doctor d1=getDoctorById(doctorId);
+        		
+        	if(p1!=null && d1!=null)
+        	{
+        		p1.setDoctorAssigned(d1);
+        		return d1;
+        	}else {
+        		return null;
+        	}
         }
-        public void createappointment()
+        private Patient getPatientById(int patientId) {
+        	for(Patient p:patients)
+        	{
+        		if(p.getPersonId()==patientId)
+        		{
+        			return p;
+        		}
+        	}
+        	return null;
+		}
+
+		private Doctor getDoctorById(int doctorId) {
+			for(Doctor d:doctors)
+			{
+				if(d.getPersonId()==doctorId)
+				{
+					return d;
+				}
+			}
+			return null;
+		}
+
+		public void createappointment()
         {
 
         }

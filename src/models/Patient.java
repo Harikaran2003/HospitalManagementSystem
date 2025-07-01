@@ -1,30 +1,34 @@
 package models;
 
-class Patient extends Person{
-    private int patiendId;
-    private String patientName;
+public class Patient extends Person{
+   
+    @Override
+	public String toString() {
+		return "Patient [patiendId="  + ", patientName=" + patientName + ", disease=" + disease
+				+ ", admissionDate=" + admissionDate + ", dischargeDate=" + dischargeDate + "]";
+	}
+  //  private int patiendId;
+	private String patientName;
     private String disease;
     private String admissionDate;
     private String dischargeDate;
-    private Doctor doctorAssigned;
+   private Doctor doctorAssigned;
 
-    public Patient(String admissionDate, String dischargeDate, String disease, Doctor doctorAssigned, int patiendId, String patientName, int personId, String name, int age, String gender, String phoneNo) {
+    public Patient( int personId, String patientName,String disease,String admissionDate, String dischargeDate, String name, int age, String gender, String phoneNo) {
         super(personId, name, age, gender, phoneNo);
-        this.admissionDate = admissionDate;
-        this.dischargeDate = dischargeDate;
-        this.disease = disease;
-        this.doctorAssigned = doctorAssigned;
-        this.patiendId = patiendId;
+        //this.patiendId = patiendId;
         this.patientName = patientName;
+        this.disease = disease;
+        this.dischargeDate = dischargeDate;
+        this.admissionDate = admissionDate;
+        
+        
+    //    this.doctorAssigned = doctorAssigned;
+     
     }
 
-    public int getPatiendId() {
-        return patiendId;
-    }
-
-    public void setPatiendId(int patiendId) {
-        this.patiendId = patiendId;
-    }
+  
+ 
 
     public String getPatientName() {
         return patientName;
